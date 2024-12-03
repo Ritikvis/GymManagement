@@ -15,6 +15,8 @@ import java.util.List;
 public class TrainerController {
     @Autowired
     private TrainerService trainerService;
+
+//    http://localhost:8080/Trainer/saveTrainer
     @PostMapping("saveTrainer")
     public ResponseEntity<Trainer> AddnewTrainer(@RequestBody Trainer trainer){
         trainerService.AddnewTrainer(trainer);
@@ -24,15 +26,6 @@ public class TrainerController {
     public List<Trainer> getTrainersWithMoreThanFiveGyms() {
         return trainerService.findTrainersWithMoreThanFiveGyms();
     }
-    @PostMapping("AddGymToTrainer")
-    public ResponseEntity<Void> AddGymToTrainer(@RequestParam Long trainerId,@RequestParam Long gymId){
-        trainerService.AddGymToTrainer(trainerId,gymId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    @PostMapping("AddMemberToTrainer")
-    public ResponseEntity<Void> AddMemberToTrainer(@RequestParam Long trainerId,@RequestParam Long memberId){
-        trainerService.AddMemberToTrainer(trainerId,memberId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+
 
 }

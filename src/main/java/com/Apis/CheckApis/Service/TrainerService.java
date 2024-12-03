@@ -16,10 +16,7 @@ import java.util.List;
 public class TrainerService {
     @Autowired
     private TrainerRepository trainerRepository;
-    @Autowired
-    private GymRopository gymRopository;
-    @Autowired
-    private MemberRepository memberRepository;
+
     public void AddnewTrainer(Trainer trainer) {
         trainerRepository.save(trainer);
     }
@@ -37,25 +34,4 @@ public class TrainerService {
         return trainersWithMoreThanFiveGyms;
     }
 
-    public void AddGymToTrainer(Long trainerId, Long gymId) {
-        Trainer trainer = trainerRepository.findById(trainerId).
-                orElseThrow(()->new RuntimeException("Id not found: "+  trainerId));
-        Gym gym  = gymRopository.findById(gymId)
-                .orElseThrow(()->new RuntimeException("Id not found: "+  gymId));
-        List<Gym> gyms = trainer.getGyms();
-        gyms.add(gym);
-        gymRopository.save(gym);
-        trainerRepository.save(trainer);
-    }
-
-    public void AddMemberToTrainer(Long trainerId, Long memberId) {
-        Trainer trainer = trainerRepository.findById(trainerId).
-                orElseThrow(()->new RuntimeException("Id not found: "+  trainerId));
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new RuntimeException("Id not found : " + memberId));
-        List<Member> members = trainer.getMembers();
-        members.add(member);
-        memberRepository.save(member);
-        trainerRepository.save(trainer);
-    }
 }

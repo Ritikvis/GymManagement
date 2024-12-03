@@ -20,9 +20,7 @@ public class MemberService {
     @Autowired
     private TrainerRepository trainerRepository;
 
-    public void AddnewMember(Member member) {
-        memberRepository.save(member);
-    }
+
 
     public Member findMemberWithMostTrainers() {
         List<Member> members = memberRepository.findAll();
@@ -56,29 +54,21 @@ public class MemberService {
         return count;
     }
 
-    public void AddGymToMember(Long memberId, Long gymId) {
+
+
+
+
+    public Member addMember(Member member, Long gymId, Long trainerId) {
         Gym gym = gymRopository.findById(gymId)
-                .orElseThrow(()->new RuntimeException("Id not found: " + gymId));
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new RuntimeException("Id not found : " + memberId));
-        member.setGym(gym);
-        memberRepository.save(member);
-        gymRopository.save(gym);
-    }
-
-    public Member getMember(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(()->new RuntimeException("Nont found: " + memberId));
-    }
-
-    public void AddTrainerToMember(Long memberId, Long trainerId) {
+                .orElseThrow(()-> new RuntimeException("Id not found"+ gymId));
         Trainer trainer = trainerRepository.findById(trainerId)
-                .orElseThrow(()->new RuntimeException("Id not found: " + trainerId));
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new RuntimeException("Id not found : " + memberId));
+                .orElseThrow(()-> new RuntimeException("Id not found"+ trainerId));
         member.setTrainer(trainer);
-        memberRepository.save(member);
-        trainerRepository.save(trainer);
+        member.setGym(gym);
+        return  memberRepository.save(member);
     }
 
+    public List<Member> getMember() {
+        return memberRepository.findAll();
+    }
 }

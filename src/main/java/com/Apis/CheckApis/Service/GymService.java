@@ -16,23 +16,9 @@ import java.util.Scanner;
 public class GymService {
     @Autowired
     private GymRopository gymRopository;
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private TrainerRepository trainerRepository;
+
 
     public void AddnewGym(Gym gym) {
-        gymRopository.save(gym);
-    }
-
-    public void AddMemberToGym(Long gymId, Long memberId) {
-        Gym gym = gymRopository.findById(gymId)
-                .orElseThrow(()->new RuntimeException("Id not found: " + gymId));
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->new RuntimeException("Id not found : " + memberId));
-        List<Member> memberList = gym.getMembers();
-        memberList.add(member);
-        memberRepository.save(member);
         gymRopository.save(gym);
     }
 
@@ -67,14 +53,5 @@ public class GymService {
                 .orElseThrow(()->new RuntimeException("id not found: " + gymId));
     }
 
-    public void AddTrainerToGym(Long gymId, Long trainerId) {
-        Gym gym = gymRopository.findById(gymId)
-                .orElseThrow(()->new RuntimeException("ID not found: " + gymId));
-        Trainer trainer = trainerRepository.findById(trainerId)
-                .orElseThrow(()->new RuntimeException("Id not found : " +  trainerId));
-        List<Trainer> trainers = gym.getTrainers();
-        trainers.add(trainer);
-        trainerRepository.save(trainer);
-        gymRopository.save(gym);
-    }
+
 }
